@@ -1,0 +1,69 @@
+body{
+    background: url('../images/login.jpg');
+  background-size:cover;
+  margin:0;
+  padding:0;
+    font-family: var(--font-style);
+  }
+  .form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background:rgba(255,255,255,0);
+    box-shadow: 0 15px 25px rgb(143, 124, 236,0.11);
+    border-radius: 10px;
+    align-items:center ;
+  } 
+  .form input{
+    position: relative;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 25px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+  }
+  .form Label{
+    position: relative;
+    left: 0;
+    top:  -60px;
+    padding: 10px 0;
+    font-size:  16px;
+    color: rgb(255, 255, 255);
+    pointer-events: none;
+    transition: .5s;
+  }
+  .form input:focus-label
+  .form input:invalid-label{
+    top: -85px;
+    left: 0;
+    color:#8f7cec;
+    font-size: 12px;
+  }
+  input[type=text] ,select{
+    background: black;
+    width: 100%;
+    border: 1px solid;
+    height: 30px;
+    line-height: 50px;
+    text-align:center;
+    color:white;
+    display: inline-block;
+    border-radius: 14px;
+    box-sizing: border-box;
+  }
+  input[type=text] ,select:hover{
+    background: rgba(12, 12, 12, 1);
+  }
+  .top{
+    margin-bottom: 20px;
+  }
+  
+  
+  

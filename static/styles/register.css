@@ -1,0 +1,46 @@
+body{
+    background: url('../images/login.jpg');
+    background-size:cover;
+    font-family: "Open Sans", sans-serif
+  }
+  .Login-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background:rgba(255,255,255,0);
+    border-radius: 10px;
+  }
+  .Login-box h2{
+    margin: 0 0 30px;
+    color: #fff;
+    text-align: center;
+  }
+  .Login-box .user-box input{
+    position: relative;
+    width: 100%;
+    padding: 5px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+  }
+  
+  input[type=text] ,select{
+    background: black;
+    width: 100%;
+    border: 1px solid;
+    height: 30px;
+    line-height: 50px;
+    color:white;
+    border-radius: 14px;
+  }
+  
+  
+  
+  

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+        body{
+    background: url('static/images/login.jpg');
+	background-size:cover;
+    font-family: var(--font-style);
+}
+.forgot{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background:rgba(255,255,255,0);
+    box-shadow: 0 15px 25px rgb(143, 124, 236,0.11);
+    border-radius: 10px;
+}
+.forgot h2{
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+}
+.forgot .user-box input{
+    position: relative;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+.sbutton{
+        background: black;
+        width: 40%;
+        margin: 0 auto;
+        border: 1px solid;
+        height: 30px;
+        color:rgb(252, 252, 252);
+        border-radius: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+
+.sbutton:hover {
+       -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+        background: #57e616;
+        color: #050801;
+        box-shadow: 0 0 5px #1ff403,
+                    0 0 25px #1ff403,
+                    0 0 50px #1ff403,
+                    0 0 200px #1ff403;
+}
+    </style>
+</head>
+<title>GET IT CHECKED</title>
+<body>
+	<div class="forgot">
+        <h2>Forgot password?</h2>
+        <form>
+           <div class="user-box"> 
+                <input type="email" name="" required="" placeholder="Please enter the email">
+                <input type="text" name="" required="" placeholder="Please Enter your USN">
+                <output type="number" name="" required="" placeholder="Enter OTP">
+            </div>
+            <div> <button class="sbutton" type="button">RESET PASSWORD</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

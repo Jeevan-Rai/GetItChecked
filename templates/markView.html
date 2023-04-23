@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="static/styles/upload.css">
+    </head>
+    <title>GET IT CHECKED</title>
+    <style>
+        .sbutton{
+        background: black;
+        width: 40%;
+        margin: 0 auto;
+        border: 1px solid;
+        height: 30px;
+        color:rgb(252, 252, 252);
+        border-radius: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+        .sbutton:hover {
+            -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+            background: #57e616;
+            color: #050801;
+            box-shadow: 0 0 5px #1ff403,
+                        0 0 25px #1ff403,
+                        0 0 50px #1ff403,
+                        0 0 200px #1ff403;
+        }
+        .marks-box{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background-color:rgba(255,255,255,0);
+    box-shadow: 0 15px 25px rgb(143, 124, 236,0.11);
+    border-radius: 10px;
+  }
+        .marks-box h2{
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+  }
+    </style>
+    <body>
+      <div class="marks-box">
+        <h2>VIEW  MARKS</h2></div>
+        
+       <div class="form">
+            <label for="scheme"></label>
+            <select id="scheme" class="top">
+                <option value="SCHEME"> SELECT THE SCHEME</option>
+                <option value="2018"> 2018</option>
+                <option value="2021"> 2021</option>
+                <option value="2022"> 2022</option>
+                </select>
+                <br>
+
+                <div class="user-box"> 
+                    <input type="text" name="" required="" placeholder="Please Enter the SUBJECT CODE">
+                        <div> <a class="sbutton" href="marksConnect.html" type="button">SUBMIT</a></div>
+        
+                </div> 
+    </body>
+</html>

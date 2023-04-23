@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="static/styles/upload.css">
+    </head>
+    <style>
+        .sbutton{
+        background: black;
+        width: 40%;
+        margin: 0 auto;
+        border: 1px solid;
+        height: 30px;
+        color:rgb(252, 252, 252);
+        border-radius: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+        .sbutton:hover {
+            -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+            background: #57e616;
+            color: #050801;
+            box-shadow: 0 0 5px #1ff403,
+                        0 0 25px #1ff403,
+                        0 0 50px #1ff403,
+                        0 0 200px #1ff403;
+        }
+    </style>
+    <title>GET IT CHECKED</title>
+    <body>
+       <div class="form">
+            <label for="scheme"></label>
+            <select id="scheme" class="top">
+                <option value="SCHEME"> SELECT THE SCHEME</option>
+                <option value="2018"> 2018</option>
+                <option value="2021"> 2021</option>
+                <option value="2022"> 2022</option>
+                </select>
+                <br>
+
+                <label for="SEMESTER"></label>
+            <select id="SEMESTER" class="top">
+                <option value="SEMISTER"> SELECT THE SEMESTER</option>
+                <option value="SEMISTER 1"> SEM 1</option>
+                <option value="SEMISTER 2"> SEM 2</option>
+                <option value="SEMISTER 3"> SEM 3</option>
+                <option value="SEMISTER 4"> SEM 4</option>
+                <option value="SEMISTER 5"> SEM 5</option>
+                <option value="SEMISTER 6"> SEM 6</option>
+                <option value="SEMISTER 7"> SEM 7</option>
+                <option value="SEMISTER 8"> SEM 8</option>
+                </select>
+                <br>
+                <div class="user-box"> 
+                    <input type="text" name="" required="" placeholder="Please enter the SUBJECT CODE">
+                </div>
+                    <form action="/ action_page.php">
+                        <input type="file" id="myFile" name="filename">
+                        <input type="date" id="last" name="last"><br><br>
+                        <label for ="start">last date:</label>
+                        <div> <button class="sbutton" type="button">UPLOAD</button></div>
+                    </form>
+                </div>
+    </body>
+</html>

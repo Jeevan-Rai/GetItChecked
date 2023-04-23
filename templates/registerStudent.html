@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="static/styles/register.css">
+  <link rel="stylesheet" href="static/styles/btnAnimation.css">
+</head>
+<title>GET IT CHECKED</title>
+<body>
+    <div class="Login-box">
+        <h2>STUDENT  REGISTER</h2>
+        <form method="POST" action="/sregister">
+           <div class="user-box"> 
+            <ul>
+                <input type="email" name="email" required placeholder="Enter Your Email">
+                <input type="name" name="name" required placeholder="Enter Your Name">
+                <input type="text" name="usn" required placeholder="Enter Your USN">
+                <input type="text" name="phone" required placeholder="Enter Phone Number">
+                <input type="password" name="password" required placeholder="Enter Your Password">
+                <input type="password" name="" required placeholder="Confirm Password">
+           <label for="branch"></label>
+           <select id="branch" name="branch">
+               <option value="branch"> SELECT THE BRANCH</option>
+               <option value="CS"> CS</option>
+               <option value="IS"> IS</option>
+               <option value="EC"> EC</option>
+               <option value="MECH"> MECH</option>
+           </select>
+           </ul>
+       </div>
+            <div id="particles-js"></div>
+            <section id="hero">
+            <button type=submit class="registerBtn"> Submit </button>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </section>
+        </form>
+    </div>
+</body>
+</html>
+
