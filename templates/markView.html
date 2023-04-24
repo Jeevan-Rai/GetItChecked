@@ -47,10 +47,10 @@
     <body>
       <div class="marks-box">
         <h2>VIEW  MARKS</h2></div>
-        
+        <form action='unique' method='POST'>
        <div class="form">
             <label for="scheme"></label>
-            <select id="scheme" class="top">
+            <select id="scheme" class="top" name='scheme'>
                 <option value="SCHEME"> SELECT THE SCHEME</option>
                 <option value="2018"> 2018</option>
                 <option value="2021"> 2021</option>
@@ -59,9 +59,10 @@
                 <br>
 
                 <div class="user-box"> 
-                    <input type="text" name="" required="" placeholder="Please Enter the SUBJECT CODE">
-                        <div> <a class="sbutton" href="marksConnect.html" type="button">SUBMIT</a></div>
+                    <input type="text" name="subcode" required="" placeholder="Please Enter the SUBJECT CODE">
+                        <div> <input class="sbutton" type="submit">SUBMIT</input></div>
         
                 </div> 
+            </form>
     </body>
 </html>

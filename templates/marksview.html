@@ -66,16 +66,14 @@ tbody tr:hover {
         <table id="marks-table">
             <thead>
                 <tr>
-                    <th>Student USN</th>
-                    <th>Student Name</th>
+                    <th>Assignment ID</th>
                     <th>Marks</th>
                 </tr>
             </thead>
             <tbody>
               {% for result in res %}
                 <tr>
-                    <td>{{ result['usn'] }}</td>
-                    <td>{{ result['name'] }}</td>
+                    <td>{{ result['aid'] }}</td>
                     <td>{{ result['marks'] }}</td>
                 </tr>
                 {% endfor %}

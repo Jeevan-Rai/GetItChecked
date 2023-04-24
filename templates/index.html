@@ -35,12 +35,37 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     <a href="#home" class="sst-bar-item sst-button sst-padding-large sst-white">Home</a>
     <a href="#aboutus" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">About Project</a>
     <a href="#contact" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Contact</a>
+    {% if session['login'] and session['user']=='fac' %}
+    <a href="/addassign" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Add Assignment</a>
+    {% endif %}
+    {% if session['login'] and session['user']=='fac' %}
+    <a href="/assigntype" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">View Assignments</a>
+    {% endif %}
+    {% if session['login'] and session['user']=='stu' %}
+    <a href="/assignopt" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Assignment options</a>
+    {% endif %}
+    {% if session['login'] %}
+    <a href="/logout" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Logout</a>
+    {% endif %}
+  </div>
   </div>
 </div>
   <!-- Navbar on small screens -->
   <div id="navDemo" class="sst-bar-block sst-black sst-hide sst-hide-large sst-hide-medium  sst-top" style="margin-top:50px">
     <a href="#aboutus" class="sst-bar-item sst-button sst-padding-large">About Project</a>
     <a href="#contact" class="sst-bar-item sst-button sst-padding-large">Contact</a>
+    {% if session['login'] and session['user']=='fac' %}
+    <a href="/addassign" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Add Assignment</a>
+    {% endif %}
+    {% if session['login'] and session['user']=='fac' %}
+    <a href="/assigntype" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">View Assignments</a>
+    {% endif %}
+    {% if session['login'] and session['user']=='stu' %}
+    <a href="/assignopt" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Assignment options</a>
+    {% endif %}
+    {% if session['login'] %}
+    <a href="/logout" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Logout</a>
+    {% endif %}
   </div>
 
 <!-- Header -->

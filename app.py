@@ -1,6 +1,8 @@
 from flask import Flask,request, render_template, flash, redirect, url_for,session, logging, send_file, Response
 from flask_mysqldb import MySQL 
 from datetime import timedelta, datetime
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__)
 app.secret_key = "yesitisasupersecretkey"
@@ -12,16 +14,18 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_DB'] = 'getitchecked'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 #init Mysql
 mysql = MySQL(app)
 
+BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'files')
 
 @app.before_request
 def make_session_permanent():
 	session.permanent = True
 	app.permanent_session_lifetime = timedelta(hours=24)
-	
+
 
 @app.route("/")
 def home():
@@ -70,10 +74,13 @@ def slogin():
 		cur = mysql.connection.cursor()
 		res = cur.execute('SELECT * FROM student WHERE email=%s and password=%s',(email, password))
 		mysql.connection.commit()
-		cur.close()
 		if(res>0):
+			session['login'] = True
+			session['user'] = 'stu'
+			session['stuid'] = cur.fetchall()[0]['usn']
+			cur.close()
 			return redirect(url_for('home'))
-	return render_template('loginFaculty.html')
+	return render_template('loginStudent.html')
 
 @app.route('/flogin', methods = ['GET', 'POST'])
 def flogin():
@@ -83,10 +90,112 @@ def flogin():
 		cur = mysql.connection.cursor()
 		res = cur.execute('SELECT * FROM faculty WHERE email=%s and password=%s',(email, password))
 		mysql.connection.commit()
-		cur.close()
 		if(res>0):
+			session['login'] = True
+			session['user'] = 'fac'
+			session['facid'] = cur.fetchall()[0]['facultyId']
 			return redirect(url_for('home'))
-	return render_template('loginStudent.html')
+		cur.close()
+	return render_template('loginFaculty.html')
+
+@app.route('/addassign', methods=['GET', 'POST'])
+def addassign():
+    if(request.method == "POST" and session['user'] and session['user']=='fac'):
+        scheme = request.form.get('scheme')
+        sem = request.form.get('sem')
+        sub_code =  request.form.get('sub_code')
+        file = request.files['file']
+        filename =  secure_filename(file.filename)
+        path = os.path.join(BASE_DIR, filename)
+        file.save(os.path.join(BASE_DIR, filename))
+        last_date = request.form.get('last')
+        facid = session['facid']
+        cur = mysql.connection.cursor()
+        res = cur.execute('INSERT INTO assignment(facultyId, path, scheme, sem, sub_code, last_date) VALUES(%s, %s, %s, %s, %s, %s)', (facid, path, scheme, sem, sub_code, last_date))
+        mysql.connection.commit()
+        cur.close()
+        if(res>0):
+            return redirect(url_for('home'))
+    return render_template('uploadFaculty.html')
+
+@app.route('/assigntype', methods=['GET', 'POST'])
+def fview():
+	if(request.method=='POST' and session['login'] and session['user']=='fac'):
+		atype = request.form.get('type')
+		if(atype=='uni'):
+			return redirect(url_for('unique'))
+		elif(atype=='com'):
+			return redirect(url_for('common'))
+	return render_template('assignType.html')
+
+@app.route('/unique', methods=['GET', 'POST'])
+def unique():
+	if(request.method == 'POST'):
+		scheme = request.form.get('scheme')
+		sub_code = request.form.get('subcode')
+		cur = mysql.connection.cursor()
+		cur.execute('SELECT upload.usn as usn, student.name as name, upload.marks as marks FROM assignment, upload, student where assignment.id=upload.aid and student.usn=upload.usn and assignment.scheme=%s and assignment.sub_code=%s', (scheme, sub_code))
+		mysql.connection.commit()
+		res = cur.fetchall()
+		cur.close()
+		return render_template('marksConnect.html',res=res)
+	return render_template('markView.html')
+
+@app.route('/common', methods=['GET', 'POST'])
+def common():
+	if(session['user'] == 'fac'):
+		cur = mysql.connection.cursor()
+		cur.execute('SELECT upload.usn as usn, student.name as name, upload.marks as marks FROM assignment, upload, student where assignment.id=upload.aid and student.usn=upload.usn')
+		mysql.connection.commit()
+		res = cur.fetchall()
+		cur.close()
+		return render_template('marksConnect.html',res=res)
+	return render_template('marksConnect.html')
+
+@app.route('/assignopt', methods=['GET', 'POST'])
+def assignopt():
+	if(request.method == 'POST'):
+		opt = request.form.get('opt')
+		if(opt == 'View'):
+			usn = session['stuid']
+			cur = mysql.connection.cursor()
+			cur.execute('SELECT * from upload where usn=%s', [usn])
+			mysql.connection.commit()
+			res = cur.fetchall()
+			cur.close()
+			return render_template('marksview.html',res=res)
+		elif(opt == 'Upload'):
+			return redirect(url_for('upload'))
+	return render_template('option.html')
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT id from assignment')
+    res = cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    if(request.method == "POST" and session['user'] and session['user']=='stu'):
+        scheme = request.form.get('scheme')
+        sem = request.form.get('sem')
+        file = request.files['file']
+        filename =  secure_filename(file.filename)
+        path = os.path.join(BASE_DIR, filename)
+        file.save(os.path.join(BASE_DIR, filename))
+        usn = session['stuid']
+        aid = request.form.get('aid')
+        cur = mysql.connection.cursor()
+        res = cur.execute('INSERT INTO upload(aid, usn, path) VALUES(%s, %s, %s)', (aid, usn, path))
+        mysql.connection.commit()
+        cur.close()
+        if(res>0):
+            return redirect(url_for('home'))
+    return render_template('upload.html', res=res)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
 
 
 if(__name__ == '__main__'):
