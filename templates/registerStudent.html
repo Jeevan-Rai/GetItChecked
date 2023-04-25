@@ -6,7 +6,101 @@
 </head>
 <title>GET IT CHECKED</title>
 <body>
-    <div class="Login-box">
+  <link rel="stylesheet" href="static/styles/sample1.css">
+<link rel="stylesheet" href="static/styles/btnAnimation.css"> 
+<!-- <link rel="stylesheet" href="main.css"> -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.sst-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-bus,.fa-child {font-size:200px}
+</style>
+
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="sst-top">
+  <div class="sst-bar sst-black sst-card sst-left-align sst-large" >
+    <a class="sst-bar-item sst-button sst-hide-medium sst-hide-large sst-right sst-padding-large sst-hover-white sst-large sst-white" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="/" class="sst-bar-item sst-button sst-padding-large sst-white">Home</a>
+    <a href="#aboutus" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">About Project</a>
+    <a href="#contact" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Contact</a>
+    {% if session['login'] and session['user']=='fac' %}
+    <a href="/addassign" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Add Assignment</a>
+    {% endif %}
+    {% if session['login'] and session['user']=='fac' %}
+    <a href="/viewmarks" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">View Assignments</a>
+    {% endif %}
+    {% if session['login'] and session['user']=='stu' %}
+    <a href="/assignopt" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Assignment options</a>
+    {% endif %}
+    {% if session['login'] %}
+    <a href="/logout" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Logout</a>
+    {% endif %}
+  </div>
+  </div>
+</div>
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="sst-bar-block sst-black sst-hide sst-hide-large sst-hide-medium  sst-top" style="margin-top:50px">
+    <a href="#aboutus" class="sst-bar-item sst-button sst-padding-large">About Project</a>
+    <a href="#contact" class="sst-bar-item sst-button sst-padding-large">Contact</a>
+    {% if session['login'] and session['user']=='fac' %}
+    <a href="/addassign" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Add Assignment</a>
+    {% endif %}
+    {% if session['login'] and session['user']=='fac' %}
+    <a href="/viewmarks" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">View Assignments</a>
+    {% endif %}
+    {% if session['login'] and session['user']=='stu' %}
+    <a href="/assignopt" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Assignment options</a>
+    {% endif %}
+    {% if session['login'] %}
+    <a href="/logout" class="sst-bar-item sst-button sst-hide-small sst-padding-large sst-hover-white">Logout</a>
+    {% endif %}
+  </div>
+    <style>
+  .alert {
+  padding: 12px;
+  font-size: 1.2rem;
+  width: 50%;
+  margin: auto;
+  border-radius: 8px;
+}
+
+.alert-error {
+  border-color: darkred;    
+  background-color: red;
+  color: white;
+}
+
+.alert-success {
+  border-color: black;
+  background-color: green;
+  color: white;
+}
+ </style>
+  <div class="alert" id="msg">{{msg}}</div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+
+    {% for category, message in messages %}
+      <div class="alert alert-{{category}}">{{ message }}</div>
+    {% endfor %}
+
+  {% endif %}
+{% endwith %}
+
+
+{% if error %}
+<div class="alert alert-danger">{{error}}</div>
+{% endif %}
+
+{% if msg %}
+<div class="alert alert-success">{{msg}}</div>
+{% endif %}
+    <div class="Login-box" style='margin-top:2%;'>
         <h2>STUDENT  REGISTER</h2>
         <form method="POST" action="/sregister">
            <div class="user-box"> 

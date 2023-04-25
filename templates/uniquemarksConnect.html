@@ -120,15 +120,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
         <table id="marks-table">
             <thead>
                 <tr>
-                    <th>Assignment ID</th>
-                    <th>Marks</th>
+                    <th>Student USN</th>
+                    <th>Student Name</th>
                 </tr>
             </thead>
             <tbody>
               {% for result in res %}
                 <tr>
-                    <td>{{ result['aid'] }}</td>
-                    <td>{{ result['marks'] }}</td>
+                    <td>{{ result['usn'] }}</td>
+                    <td>{{ result['name'] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
