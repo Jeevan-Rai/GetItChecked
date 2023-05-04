@@ -116,6 +116,7 @@ def flogin():
 def addassign():
 	if(request.method == "POST" and session['user'] and session['user']=='fac'):
 		try:
+			id = request.form.get('id')
 			scheme = request.form.get('scheme')
 			sem = request.form.get('sem')
 			sub_code =  request.form.get('sub_code')
@@ -126,7 +127,7 @@ def addassign():
 			last_date = request.form.get('last')
 			facid = session['facid']
 			cur = mysql.connection.cursor()
-			res = cur.execute('INSERT INTO assignment(facultyId, path, scheme, sem, sub_code, last_date) VALUES(%s, %s, %s, %s, %s, %s)', (facid, path, scheme, sem, sub_code, last_date))
+			res = cur.execute('INSERT INTO assignment(id, facultyId, path, scheme, sem, sub_code, last_date) VALUES(%s, %s, %s, %s, %s, %s, %s)', (id, facid, path, scheme, sem, sub_code, last_date))
 			mysql.connection.commit()
 			cur.close()
 			if(res>0):
@@ -154,6 +155,9 @@ def unique():
 	cur.close()
 	if(request.method == "POST" and session['user'] and session['user']=='stu'):
 		try:
+			scheme = request.form.get('scheme')
+			sem = request.form.get('sem')
+			subcode = request.form.get('subcode')
 			file = request.files['file']
 			filename =  file.filename
 			path = os.path.join(BASE_DIR, filename)
@@ -161,12 +165,32 @@ def unique():
 			usn = session['stuid']
 			aid = request.form.get('aid')
 			cur = mysql.connection.cursor()
-			res = cur.execute('INSERT INTO upload(aid, usn, path, marks, type) VALUES(%s, %s, %s, %s, %s)', (aid, usn, path, 10, 'common'))
+			res = cur.execute('SELECT upload.path FROM upload, assignment where upload.aid=assignment.id and assignment.scheme=%s and assignment.sem=%s and assignment.sub_code=%s',(scheme, sem, subcode))
 			mysql.connection.commit()
-			cur.close()
 			if(res>0):
-				flash('Uploaded successfully')
-				return redirect(url_for('home'))
+				plagcheck.writeTextUser(path)
+				paths = cur.fetchall()
+				for i in paths:
+					print(i)
+					plagcheck.writeTextFaculty(i['path'])
+					check = plagcheck.Check_Plagiarism('user.txt','faculty.txt')
+					if(check>50):
+						flash('Cannot upload pdf due to plagiarism','error')
+						return redirect(url_for('unique'))
+
+				res = cur.execute('INSERT INTO upload(aid, usn, path, type) VALUES(%s, %s, %s, %s)', (aid, usn, path, 'unique'))
+				mysql.connection.commit()
+				cur.close()
+				if(res>0):
+					flash('Uploaded successfully')
+					return redirect(url_for('home'))
+			else:
+				res = cur.execute('INSERT INTO upload(aid, usn, path, marks, type) VALUES(%s, %s, %s, %s, %s)', (aid, usn, path, 10, 'unique'))
+				mysql.connection.commit()
+				cur.close()
+				if(res>0):
+					flash('Uploaded successfully')
+					return redirect(url_for('home'))
 		except:
 			flash('Error uploading file', 'error')
 	return render_template('uploadu.html', res=reslt)
@@ -190,7 +214,7 @@ def common():
 			usn = session['stuid']
 			aid = request.form.get('aid')
 			cur = mysql.connection.cursor()
-			res = cur.execute('SELECT upload.path FROM upload, assignment where upload.aid=assignment.id and assignment.scheme=%s and assignment.sem=%s and assignment.sub_code=%s',(scheme, sem, subcode))
+			res = cur.execute('SELECT assignment.path FROM assignment where assignment.id=%s and assignment.scheme=%s and assignment.sem=%s and assignment.sub_code=%s',(aid, scheme, sem, subcode))
 			mysql.connection.commit()
 			if(res>0):
 				mks = []
@@ -202,19 +226,15 @@ def common():
 					check = plagcheck.Check_Plagiarism('user.txt','faculty.txt')
 					mk = plagcheck.autoMarkAssign(check)
 					mks.append(mk)
-				maxplag = max(mks)
-				if(maxplag > 5):
-					flash('Cannot upload pdf due to plagiarism','error')
-					return redirect(url_for('unique'))
-				else:
-					res = cur.execute('INSERT INTO upload(aid, usn, path, marks, type) VALUES(%s, %s, %s, %s, %s)', (aid, usn, path, 10-maxplag, 'unique'))
-					mysql.connection.commit()
-					cur.close()
-					if(res>0):
-						flash('Uploaded successfully')
-						return redirect(url_for('home'))
+				maxmks = min(mks)
+				res = cur.execute('INSERT INTO upload(aid, usn, path, marks, type) VALUES(%s, %s, %s, %s, %s)', (aid, usn, path, maxmks, 'common'))
+				mysql.connection.commit()
+				cur.close()
+				if(res>0):
+					flash('Uploaded successfully')
+					return redirect(url_for('home'))
 			else:
-				res = cur.execute('INSERT INTO upload(aid, usn, path, marks, type) VALUES(%s, %s, %s, %s, %s)', (aid, usn, path, 10, 'unique'))
+				res = cur.execute('INSERT INTO upload(aid, usn, path, marks, type) VALUES(%s, %s, %s, %s, %s)', (aid, usn, path, 10, 'common'))
 				mysql.connection.commit()
 				cur.close()
 				if(res>0):

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2023 at 12:05 PM
+-- Generation Time: Apr 26, 2023 at 05:52 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -78,7 +78,8 @@ CREATE TABLE `upload` (
   `aid` int(11) NOT NULL,
   `usn` varchar(50) NOT NULL,
   `path` varchar(100) NOT NULL,
-  `marks` int(11) DEFAULT NULL
+  `marks` int(11) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
